@@ -33,6 +33,7 @@
             this.pathTextBox = new System.Windows.Forms.TextBox();
             this.BrowseButton = new System.Windows.Forms.Button();
             this.generateButton = new System.Windows.Forms.Button();
+            this.rawdataReversal = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -71,11 +72,22 @@
             this.generateButton.UseVisualStyleBackColor = true;
             this.generateButton.Click += new System.EventHandler(this.generateButton_Click);
             // 
+            // rawdataReversal
+            // 
+            this.rawdataReversal.AutoSize = true;
+            this.rawdataReversal.Location = new System.Drawing.Point(36, 60);
+            this.rawdataReversal.Name = "rawdataReversal";
+            this.rawdataReversal.Size = new System.Drawing.Size(117, 17);
+            this.rawdataReversal.TabIndex = 4;
+            this.rawdataReversal.Text = "Reverse Raw Data";
+            this.rawdataReversal.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(472, 130);
+            this.Controls.Add(this.rawdataReversal);
             this.Controls.Add(this.generateButton);
             this.Controls.Add(this.BrowseButton);
             this.Controls.Add(this.pathTextBox);
@@ -96,6 +108,7 @@
         private System.Windows.Forms.TextBox pathTextBox;
         private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.Button generateButton;
+        private System.Windows.Forms.CheckBox rawdataReversal;
     }
 }
 

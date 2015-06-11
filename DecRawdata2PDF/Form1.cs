@@ -144,6 +144,7 @@ namespace DecRawdata2PDF
                 try
                 {
                     rawData = int.Parse(theLine);
+                    rawData = rawdataReversal.Checked ? (0 - rawData) : rawData;
                 }
                 catch (Exception e)
                 {
@@ -207,6 +208,11 @@ namespace DecRawdata2PDF
                     cb.Stroke();
                     rawDataIndex = 0;
                     blockRowIndex++;
+                    if(blockRowIndex >= blockRowCount){
+                        pdfdoc.NewPage();
+                        blockRowIndex = 0;
+                        rawDataIndex = 0;
+                    }
                 }
 
             }
