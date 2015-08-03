@@ -17,17 +17,18 @@ namespace DecRawdata2PDF
         iTextSharp.text.Image pdfImg;
         iTextSharp.text.pdf.PdfWriter pdfwriter;
 
-        iTextSharp.text.Rectangle currentPageSize = new iTextSharp.text.Rectangle(7440, 12360);//iTextSharp.text.PageSize.A0;
+        //iTextSharp.text.Rectangle currentPageSize = new iTextSharp.text.Rectangle(7440, 12360);//iTextSharp.text.PageSize.A0;
+        iTextSharp.text.Rectangle currentPageSize = iTextSharp.text.PageSize.A4;
 
-
-        int gridSideLength = 20;// side length of each small square grid
-        int blockRowInterval = 40;//interval between two BlockRow
+        float gridSideLength = iTextSharp.text.PageSize.A4.Width / 210;// side length of each small square grid, width of A4 is 210 mm, make sure every grid is 1 mm
+        
+        int blockRowInterval = 10;//interval between two BlockRow
         int gridCountInBlockRowVertical = 40;
         int gridCountInBlockRowHorizontal;// = currentPageSize.Width / gridSideLength;
-        int firstBlockRowOffsetInVertical = 100;//first BlockRow move down to give space for Text Head writing
+        int firstBlockRowOffsetInVertical = 30;//first BlockRow move down to give space for Text Head writing
 
 
-        int blockRowHeight; // = gridSideLength * gridCountInBlockRowVertical;
+        float blockRowHeight; // = gridSideLength * gridCountInBlockRowVertical;
         int blockRowCount; // = currentPageSize.Height / (blockRowHeight + blockRowInterval);   means how many BlockRow each page contains
 
 
@@ -70,6 +71,7 @@ namespace DecRawdata2PDF
                 pathTextBox.Text = textFilePath;
             }
         }
+
 
 
         
@@ -117,9 +119,9 @@ namespace DecRawdata2PDF
             rawDataIndex = 0;
 
             iTextSharp.text.pdf.BaseFont font = iTextSharp.text.pdf.BaseFont.CreateFont();
-            cb.SetFontAndSize(font, 20);
+            cb.SetFontAndSize(font, 10);
             cb.BeginText();
-            cb.SetTextMatrix(100, currentPageSize.Height - 50);
+            cb.SetTextMatrix(20, currentPageSize.Height - 15);
             cb.ShowText("NeuroSky BMD10x ECG: X-axle, smallest square = 40mS; Y-axle, smallest square = 0.1mV");
             cb.EndText();
 
@@ -168,11 +170,11 @@ namespace DecRawdata2PDF
                     {
                         if (i % 5 == 0)
                         {
-                            cb.SetLineWidth(2.5f);
+                            cb.SetLineWidth(0.6f);
                         }
                         else
                         {
-                            cb.SetLineWidth(0.5f);
+                            cb.SetLineWidth(0.2f);
                         }
                         cb.MoveTo(0, currentPageSize.Height - (firstBlockRowOffsetInVertical + blockRowIndex * (blockRowHeight + blockRowInterval) + i * gridSideLength));
                         cb.LineTo(currentPageSize.Width, currentPageSize.Height - (firstBlockRowOffsetInVertical + blockRowIndex * (blockRowHeight + blockRowInterval) + i * gridSideLength));
@@ -184,18 +186,18 @@ namespace DecRawdata2PDF
                     {
                         if (j % 5 == 0)
                         {
-                            cb.SetLineWidth(2.5f);
+                            cb.SetLineWidth(0.6f);
                         }
                         else
                         {
-                            cb.SetLineWidth(0.5f);
+                            cb.SetLineWidth(0.2f);
                         }
                         cb.MoveTo(j * gridSideLength, currentPageSize.Height - (firstBlockRowOffsetInVertical + blockRowIndex * (blockRowHeight + blockRowInterval)));
                         cb.LineTo(j * gridSideLength, currentPageSize.Height - (firstBlockRowOffsetInVertical + blockRowIndex * (blockRowHeight + blockRowInterval) + blockRowHeight));
                         cb.Stroke();
                     }
                     //prepare to draw ECG 
-                    cb.SetLineWidth(1.5f);
+                    cb.SetLineWidth(0.8f);
                     cb.SetColorStroke(iTextSharp.text.BaseColor.BLACK);
 
                     cb.MoveTo(0, currentBaseLine);
@@ -295,6 +297,63 @@ namespace DecRawdata2PDF
             }
 
             pdfdoc.Dispose();
+        }
+
+
+        private void radioButton_CheckedChanged(object sender, System.EventArgs e)
+        {
+            RadioButton rb = (RadioButton)sender;
+            if(!rb.Checked){
+                //Console.WriteLine("NNN:" + rb.TabIndex);
+                return;
+            }
+            
+            Console.WriteLine("Index:" + rb.TabIndex);
+            switch(rb.TabIndex){
+                case 8:
+                    currentPageSize = iTextSharp.text.PageSize.A0;
+                    gridSideLength = currentPageSize.Width / 841;
+                    break;
+                case 9:
+                    currentPageSize = iTextSharp.text.PageSize.A1;
+                    gridSideLength = currentPageSize.Width / 594;
+                    break;
+                case 10:
+                    currentPageSize = iTextSharp.text.PageSize.A2;
+                    gridSideLength = currentPageSize.Width / 420;
+                    break;
+                case 11:
+                    currentPageSize = iTextSharp.text.PageSize.A3;
+                    gridSideLength = currentPageSize.Width / 297;
+                    break;
+                case 12:
+                    currentPageSize = iTextSharp.text.PageSize.A4;
+                    gridSideLength = currentPageSize.Width / 210;
+                    break;
+                case 13:
+                    currentPageSize = new iTextSharp.text.Rectangle(iTextSharp.text.PageSize.A0.Height, iTextSharp.text.PageSize.A0.Width);
+                    gridSideLength = currentPageSize.Width / 1189;
+                    break;
+                case 14:
+                    currentPageSize = new iTextSharp.text.Rectangle(iTextSharp.text.PageSize.A1.Height, iTextSharp.text.PageSize.A1.Width);
+                    gridSideLength = currentPageSize.Width / 841;
+                    break;
+                case 15:
+                    currentPageSize = new iTextSharp.text.Rectangle(iTextSharp.text.PageSize.A2.Height, iTextSharp.text.PageSize.A2.Width);
+                    gridSideLength = currentPageSize.Width / 594;
+                    break;
+                case 16:
+                    currentPageSize = new iTextSharp.text.Rectangle(iTextSharp.text.PageSize.A3.Height, iTextSharp.text.PageSize.A3.Width);
+                    gridSideLength = currentPageSize.Width / 420;
+                    break;
+                case 17:
+                    currentPageSize = new iTextSharp.text.Rectangle(iTextSharp.text.PageSize.A4.Height, iTextSharp.text.PageSize.A4.Width);
+                    gridSideLength = currentPageSize.Width / 297;
+                    break;
+
+            }
+
+            
         }
 
 
