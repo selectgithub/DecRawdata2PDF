@@ -25,7 +25,7 @@ namespace DecRawdata2PDF
         int blockRowInterval = 10;//interval between two BlockRow
         int gridCountInBlockRowVertical = 40;
         int gridCountInBlockRowHorizontal;// = currentPageSize.Width / gridSideLength;
-        int firstBlockRowOffsetInVertical = 30;//first BlockRow move down to give space for Text Head writing
+        int firstBlockRowOffsetInVertical = 45;//first BlockRow move down to give space for Text Head writing
 
 
         float blockRowHeight; // = gridSideLength * gridCountInBlockRowVertical;
@@ -121,7 +121,7 @@ namespace DecRawdata2PDF
             iTextSharp.text.pdf.BaseFont font = iTextSharp.text.pdf.BaseFont.CreateFont();
             cb.SetFontAndSize(font, 10);
             cb.BeginText();
-            cb.SetTextMatrix(20, currentPageSize.Height - 15);
+            cb.SetTextMatrix(20, currentPageSize.Height - 35);
             cb.ShowText("NeuroSky BMD10x ECG: X-axle, smallest square = 40mS; Y-axle, smallest square = 0.1mV");
             cb.EndText();
 
